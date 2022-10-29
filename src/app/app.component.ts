@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -7,8 +7,12 @@ import Swal from 'sweetalert2';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   displayStyle = "none";
+
+  session: any;
+  display = false;
+  isButtonOn: boolean = true;
   
   openPopup() {
     this.displayStyle = "block";
@@ -28,7 +32,7 @@ export class AppComponent {
   submitAction() {
     if(this.addBookmark.valid){
       console.warn(this.addBookmark.value);
-      localStorage.setItem('form-data', JSON.stringify(this.addBookmark.value));
+      localStorage.setItem('session', JSON.stringify(this.addBookmark.value));
       this.addBookmark.value
       Swal.fire('Success', 'Success', 'success')
       this.addBookmark.reset();
@@ -36,11 +40,20 @@ export class AppComponent {
       Swal.fire('Error', 'Please Input Valid Data', 'error')
     }
   }
-  getData() {
-    //return localStorage.getItem('form-data')
- }
+  ngOnInit(): void {
+    this.loadData();
+  }
 
+  showDetails(){
+    this.display = !this.display;
+    this.isButtonOn = !this.isButtonOn;
+  }
 
+ //get data from localstorage 
+loadData(){
+  let data: any = localStorage.getItem('session');
+  this.session = JSON.parse(data);
+}
 
   get title() {
     return this.addBookmark.get('title');

@@ -51,14 +51,29 @@
     </div>
   </div>
   <div class="bookmark">
-    <h6>Category: </h6>
+    <div class="row">
+      <div class="col">
+        <h6 *ngIf="session">Category: {{session.category}}</h6>
     <div class="card" style="width: 20rem;">
       <div class="card-body">
         <div class="row">
-          <div class="col">ss</div>
+          <div class="col">
+            <p *ngIf="session">{{session.title}}</p>
+          </div>
         <div class="col text-center">
-          <button type="button" class="btn btn-outline-primary">Details</button>
+          <button style="font-size: 10px; border-radius: 0;" type="button" class="btn btn-outline-primary" (click)="showDetails()">Details</button>
         </div>
+        </div>
+      </div>
+    </div>
+      </div>
+      <div class="col">
+        <div class="card" style="width: 18rem;" *ngIf="display">
+          <div class="card-body" *ngIf="session">
+            <p>Title: {{session.title}}</p>
+            <p>URL: {{session.url}}</p>
+            <p>Category: {{session.category}}</p>
+          </div>
         </div>
       </div>
     </div>
